@@ -1,0 +1,24 @@
+{% extends "phototape/base.html" %}
+{% load static %}
+{% block title %} Login {% endblock %}
+{% block content %}
+
+
+    <link href="{% static 'phototape/css/signin.css' %}" rel="stylesheet">
+    <link href="{% static 'phototape/css/bootstrap.min.css' %}" rel="stylesheet">
+        <body class="text-center">
+            <main class="form-signin w-100 m-auto">
+                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    <div>
+                        {{ form.username }}
+                    </div>
+                    <div>
+                        {{ form.password }}
+                    </div>
+                    <button type="submit">Sign in</button> или <a href="register">Sing up</a>
+                </form>
+            </main>
+        </body>
+{% endblock %}

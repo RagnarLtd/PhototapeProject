@@ -1,0 +1,14 @@
+{% extends "phototape/base.html" %}
+{% block title %} Upload photo {% endblock %}
+{% block content %}
+{% if request.user.is_authenticated %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ upload_photo_form.as_p }}
+        <button type="submit">Загрузить файл</button>
+    </form>
+{% else %}
+    <h4>You are not authorized</h4>
+    <a href="login">Login</a>
+{% endif %}
+{% endblock %}

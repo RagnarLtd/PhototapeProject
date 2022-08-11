@@ -1,0 +1,38 @@
+{% extends "phototape/base.html" %}
+{% load static %}
+
+{% block title %} Profile, {{ request.user.username }} {% endblock %}
+{% block content %}
+<h2>Profile, {{ request.user.username }} </h2>
+    <style>
+   .outline {
+    border: 3px ridge #157347;
+    padding: 10px;
+    width: 200px;
+   }
+  </style>
+{% if request.user.is_authenticated %}
+    {% if profile %}
+        <img src="{{ profile.avatar.url }}" alt="ertherthr" width="180" height="120">
+    {% endif %}
+    <p class="outline">Username: {{ request.user.username }}</p>
+    <p class="outline">Name: {{ request.user.userprofile.name }}</p>
+    <p class="outline">Surname: {{ request.user.userprofile.surname }}</p>
+    <p class="outline">Age : {{ request.user.userprofile.age }}</p>
+    <p class="outline">City: {{ request.user.userprofile.city }}</p>
+    <a href="/profile_edit"> Редактировать профиль </a><br>
+    <a href="logout">Logout</a><br>
+    <a href="/upload_photo"> Добавить фотографию </a>
+    <form method="get" action="{% url 'main' %}">
+        {% csrf_token %}
+        <div>
+            <button style="background: transparent; border: none; box-shadow: none;" type="submit">
+                <img src="{% static 'phototape/image/home.png' %}" alt="like" width="50" height="50">
+            </button>
+        </div>
+    </form>
+{% else %}
+    <h4>You are not authorized</h4>
+    <a href="login">Login</a>
+{% endif %}
+{% endblock %}

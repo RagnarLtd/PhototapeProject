@@ -1,0 +1,43 @@
+{% extends "phototape/base.html" %}
+{% load static %}
+{% block title %}  {% endblock %}
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <div>
+            <img src="{{ photo.photo.url }}" alt="photo" width="800" height="600">
+            <form method="post" action="{% url 'like' photo.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="username" value="{{ username }}">
+                <div style="margin-top: 10px; width: 50px; height: 50px;">
+                    <input type="hidden" name="text" value="{{ request.path }}">
+                    <button style="background: transparent; border: none; box-shadow: none;" type="submit">
+                        <img src="{% static 'phototape/image/like.jpg' %}" alt="like" width="30" height="30">
+                        <span>{{ photo.likes.all.count }}</span>
+                    </button>
+                </div>
+                </form>
+                <form method="post" action="{% url 'dislike' photo.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="username" value="{{ username }}">
+                    <div style="margin-top: -50px; width: 50px; height: 50px; margin-left: 40px;">
+                        <input type="hidden" name="text" value="{{ request.path }}">
+                        <button style="background: transparent; border: none; box-shadow: none;" type="submit">
+                            <img src="{% static 'phototape/image/dislike.png' %}" alt="dislike" width="30" height="30">
+                            <span>{{ photo.dislikes.all.count }}</span>
+                        </button>
+                    </div>
+                </form>
+        </div>
+        <div>
+            {% for comment in comments %}
+                <p>{{ comment.name }} : {{ comment.text }}</p>
+            {% endfor %}
+             <form method="post">
+                 {% csrf_token %}
+                 {{ comment_form }}
+                 <input type="hidden" name="idofphoto" value="{{ photo.id }}">
+                 <button type="submit">Добавить</button>
+             </form>
+         </div>
+    {% endif %}
+{% endblock %}

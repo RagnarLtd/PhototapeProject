@@ -1,0 +1,46 @@
+{% extends "phototape/base.html" %}
+{% load static %}
+{% block title %} Main {% endblock %}
+{% block content %}
+<link href="{% static 'phototape/css/bootstrap.min.css' %}" rel="stylesheet">
+<body class="text-center">
+    {% if request.user.is_authenticated %}
+        <form action="{% url 'find_result' %}" method="get">
+            <input name="text" type="text" placeholder="Найти пользователя...">
+            <button type="submit">Поиск</button>
+        </form>
+        {% for photo in photos %}
+            <img style="margin-top: 40px" src="{{photo.photo.url }}" alt="photo" width="800" height="600">
+            <form method="post" action="{% url 'like' photo.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="username" value="{{ username }}">
+            <div style="margin-top: 10px; width: 50px; height: 50px; margin-left: 1270px">
+                <button style="background: transparent; border: none; box-shadow: none;" type="submit">
+                    <img src="{% static 'phototape/image/like.jpg' %}" alt="like" width="30" height="30">
+                    <span>{{ photo.likes.all.count }}</span>
+                </button>
+            </div>
+            </form>
+            <form method="post" action="{% url 'dislike' photo.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="username" value="{{ username }}">
+                <div style="margin-top: -50px; width: 50px; height: 50px; margin-left: 1310px;">
+                    <button style="background: transparent; border: none; box-shadow: none;" type="submit">
+                        <img src="{% static 'phototape/image/dislike.png' %}" alt="dislike" width="30" height="30">
+                        <span>{{ photo.dislikes.all.count }}</span>
+                    </button>
+                </div>
+            </form>
+            <div style="margin-top: -50px">
+                <a href="/{{ photo.id }}/photo">
+                Посмотреть комментарии
+            </a>
+            </div>
+
+        {% endfor %}
+    {% else %}
+        <h4>You are not authorized</h4>
+        <a href="login">Login</a> или <a href="register">Sing up</a>
+    {% endif %}
+</body>
+{% endblock %}

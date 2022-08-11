@@ -1,0 +1,15 @@
+{% extends "phototape/base.html" %}
+{% load static %}
+{% block title %} Profile {{ username }} {% endblock %}
+{% block content %}
+    <link href="{% static 'phototape/css/bootstrap.min.css' %}" rel="stylesheet">
+    <body class="text-center">
+    <form action="{% url 'find_result' %}" method="get">
+        <input name="text" type="text" placeholder="Найти пользователя...">
+        <button type="submit">Поиск</button>
+    </form>
+    {% for user in object_list %}
+        <h3><a href="/{{ user.username }}">{{ user.username }}</a></h3>
+    {% endfor %}
+    </body>
+{% endblock %}
