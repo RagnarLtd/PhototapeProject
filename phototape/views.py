@@ -34,7 +34,7 @@ class UserRegisterFormView(View):
             subject = 'Welcome to Phototape'
             message = 'Hello ' + username + '! \n' + 'Welcome to Phototape! \n Thenk you for visiting our website!'
             from_email = settings.EMAIL_HOST_USER
-            to_list = [form.cleaned_data.get('email'), 'greenment@mail.ru']
+            to_list = [form.cleaned_data.get('email')]
             send_mail(subject, message, from_email, to_list, fail_silently=True)
             return redirect('/profile')
         else:
