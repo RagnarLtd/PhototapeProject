@@ -32,7 +32,7 @@ class UserRegisterFormView(View):
             login(request, user)
             # Welcome Email
             subject = 'Welcome to Phototape'
-            message = 'Hello ' + username + '! \n' + 'Welcome to Phototape! \n Thenk you for visiting our website!'
+            message = 'Hello ' + username + '! \n' + 'Welcome to Phototape! \n Thank you for visiting our website!'
             from_email = settings.EMAIL_HOST_USER
             to_list = [form.cleaned_data.get('email')]
             send_mail(subject, message, from_email, to_list, fail_silently=True)
