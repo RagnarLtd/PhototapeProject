@@ -67,8 +67,7 @@ class UserFormView(View):
     def get(self, request):
         if request.user.is_authenticated:
             try:
-                profile = UserProfile.objects.get(user_id=request.user.id)
-                return render(request, 'phototape/profile.html', context={'profile': profile})
+                return render(request, 'phototape/profile.html')
             except:
                 UserProfile.objects.create(user_id=request.user.id)
                 return render(request, 'phototape/profile.html')
